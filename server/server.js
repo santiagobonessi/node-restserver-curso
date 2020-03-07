@@ -4,8 +4,6 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const app = express();
 
-mongoose.set('useFindAndModify', false);
-
 // parse application/x-www-form-urlencoded (middleware)
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -14,9 +12,12 @@ app.use(bodyParser.json());
 
 app.use( require('./routes/usuario') );
 
-mongoose.connect('mongodb://localhost:27017/cafe', {
+mongoose.set('useFindAndModify', false);
+
+mongoose.connect(process.env.URLDB, {
   useNewUrlParser: true,
-  useUnifiedTopology: true
+  useUnifiedTopology: true,
+  useCreateIndex: true
 }, (err, res) => {
   if (err) throw err;
   console.log('Base de datos online');
