@@ -160,7 +160,6 @@ app.put('/producto/:id', verificaToken, (req, res) => {
             producto: productoDB
         });
     });
-
 });
 
 // ============================
