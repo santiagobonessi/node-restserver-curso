@@ -11,7 +11,7 @@ app.get('/categoria', verificaToken, (req, res) => {
     Categoria
         .find()
         .sort('descripcion')
-        .populate('usuario',['nombre', 'email'])
+        .populate('usuario', ['nombre', 'email'])
         .exec((err, categorias) => {
             if (err) {
                 return res.status(400).json({
@@ -19,7 +19,7 @@ app.get('/categoria', verificaToken, (req, res) => {
                     err
                 });
             }
-            Categoria.collection.countDocuments((err, conteo) => {
+            Categoria.collection.countDocuments((err, count) => {
                 if (err) {
                     return res.status(400).json({
                         ok: false,
@@ -28,7 +28,7 @@ app.get('/categoria', verificaToken, (req, res) => {
                 }
                 return res.json({
                     ok: true,
-                    cantidad: conteo,
+                    cantidad: count,
                     categorias
                 });
             });
@@ -42,7 +42,7 @@ app.get('/categoria/:id', verificaToken, (req, res) => {
     let id = req.params.id;
     Categoria
         .findById(id)
-        .populate('usuario',['nombre', 'email'])
+        .populate('usuario', ['nombre', 'email'])
         .exec((err, categoriaDB) => {
             if (err) {
                 return res.status(400).json({
